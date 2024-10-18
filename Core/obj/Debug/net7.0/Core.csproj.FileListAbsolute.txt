@@ -1,0 +1,12 @@
+C:\practicaNetCore\NetMarket\Core\bin\Debug\net7.0\Core.deps.json
+C:\practicaNetCore\NetMarket\Core\bin\Debug\net7.0\Core.dll
+C:\practicaNetCore\NetMarket\Core\bin\Debug\net7.0\Core.pdb
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\Core.AssemblyInfoInputs.cache
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\Core.AssemblyInfo.cs
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\Core.csproj.CoreCompileInputs.cache
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\Core.dll
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\refint\Core.dll
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\Core.pdb
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\ref\Core.dll
+C:\practicaNetCore\NetMarket\Core\obj\Debug\net7.0\Core.csproj.AssemblyReference.cache
