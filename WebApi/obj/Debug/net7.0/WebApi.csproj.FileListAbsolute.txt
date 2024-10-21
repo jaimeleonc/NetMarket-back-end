@@ -70,3 +70,4 @@ C:\practicaNetCore\NetMarket\WebApi\bin\Debug\net7.0\AutoMapper.Extensions.Micro
 C:\practicaNetCore\NetMarket\WebApi\bin\Debug\net7.0\Humanizer.dll
 C:\practicaNetCore\NetMarket\WebApi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\practicaNetCore\NetMarket\WebApi\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\practicaNetCore\NetMarket\WebApi\obj\Debug\net7.0\WebApi.sourcelink.json
