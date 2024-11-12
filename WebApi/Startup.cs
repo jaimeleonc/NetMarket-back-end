@@ -1,13 +1,19 @@
 ﻿using BusinessLogic.Data;
 using BusinessLogic.Logic;
+using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using System;
+using System.Text;
 using WebApi.Dtos;
 using WebApi.Middleware;
 
@@ -23,14 +29,48 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddScoped<ITokenService, TokenService>();
+
+        var builder = services.AddIdentityCore<Usuario>();
+
+        builder = new IdentityBuilder(builder.UserType, builder.Services);
+        builder.AddEntityFrameworkStores<SeguridadDbContext>();
+        builder.AddSignInManager<SignInManager<Usuario>>();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:key"])),
+                ValidIssuer = Configuration["Token:Issuer"],
+                ValidateIssuer = true,
+                ValidateAudience = false
+            };
+        });
+
         services.AddAutoMapper(typeof(MappingProfiles));
         services.AddScoped(typeof(IGenericRepository<>),(typeof(GenericRepository<>)));
         services.AddDbContext<MarketDbContext>(opt =>
         {
             opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
         });
+
+        services.AddDbContext<SeguridadDbContext>(x =>
+        {
+            x.UseSqlServer(Configuration.GetConnectionString("IdentitySeguridad"));
+        });
+
+        services.AddSingleton<IConnectionMultiplexer>(c => 
+        {
+            var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
+            return ConnectionMultiplexer.Connect(configuration);
+        });
+
         services.AddTransient<IProductoRepository, ProductoRepository>();
         services.AddControllers();
+
+        services.AddScoped<ICarritoCompraRepository, CarritoCompraRepository>();
 
         services.AddCors(opt =>
         {
@@ -56,6 +96,8 @@ public class Startup
         app.UseRouting();
 
         app.UseCors("CorsRule");
+
+        app.UseAuthentication();
 
         app.UseAuthentication();
         app.UseAuthorization();
